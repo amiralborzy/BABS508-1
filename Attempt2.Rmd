@@ -154,3 +154,14 @@ log_mod <- lrm(Attrition ~ BusinessTravel + JobSatisfaction + WorkLifeBalance + 
 
 print(log_mod)
 ```
+
+
+
+```{r influential, echo=FALSE}
+#Examining the influential observation effect of the model using DFBETAS
+which.influence (log_mod, .4)  
+
+## The Observations 10 and 60 are influential for business travel, and as there is only 2 observation we decided to drop them. 
+sel <- sel[-c(10, 60), ]
+log_mod <- lrm(Attrition ~ BusinessTravel + JobSatisfaction + WorkLifeBalance + pol(PercentSalaryHike,2), data = sel, x=TRUE, y= TRUE)
+which.influence (log_mod, .4)  
